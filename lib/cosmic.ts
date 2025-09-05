@@ -19,12 +19,13 @@ export async function getInvestmentResearch() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
     
-    return response.objects;
+    return response.objects || [];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
     }
-    throw new Error('Failed to fetch investment research');
+    console.error('Failed to fetch investment research:', error);
+    return [];
   }
 }
 
@@ -36,12 +37,13 @@ export async function getPortfolioCompanies() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
     
-    return response.objects;
+    return response.objects || [];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
     }
-    throw new Error('Failed to fetch portfolio companies');
+    console.error('Failed to fetch portfolio companies:', error);
+    return [];
   }
 }
 
@@ -53,12 +55,13 @@ export async function getTeamMembers() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
     
-    return response.objects;
+    return response.objects || [];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
     }
-    throw new Error('Failed to fetch team members');
+    console.error('Failed to fetch team members:', error);
+    return [];
   }
 }
 
@@ -70,12 +73,13 @@ export async function getMarketInsights() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
     
-    return response.objects;
+    return response.objects || [];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
     }
-    throw new Error('Failed to fetch market insights');
+    console.error('Failed to fetch market insights:', error);
+    return [];
   }
 }
 
@@ -87,79 +91,12 @@ export async function getPerformanceReports() {
       .props(['id', 'title', 'slug', 'metadata'])
       .depth(1);
     
-    return response.objects;
+    return response.objects || [];
   } catch (error) {
     if (hasStatus(error) && error.status === 404) {
       return [];
     }
-    throw new Error('Failed to fetch performance reports');
-  }
-}
-
-// AI Stock Analysis function
-export async function analyzeStockWithAI(stockData: any, investmentCriteria: string) {
-  try {
-    const prompt = `
-      Analyze this stock for long-term value investment potential based on the following criteria: ${investmentCriteria}
-      
-      Stock Data:
-      - Symbol: ${stockData.symbol}
-      - Company: ${stockData.name}
-      - Sector: ${stockData.sector}
-      - Market Cap: ${stockData.marketCap}
-      - P/E Ratio: ${stockData.peRatio}
-      - Revenue Growth: ${stockData.revenueGrowth}%
-      - Profit Margin: ${stockData.profitMargin}%
-      - Dividend Yield: ${stockData.dividendYield}%
-      - Debt to Equity: ${stockData.debtToEquity}
-      - ROA: ${stockData.roa}%
-      - ROE: ${stockData.roe}%
-      
-      Please provide:
-      1. Investment Score (1-100)
-      2. Key strengths and weaknesses
-      3. Risk assessment
-      4. Recommendation (Buy/Hold/Pass)
-      5. Brief rationale
-    `;
-
-    const analysis = await cosmic.ai.generateText({
-      prompt,
-      max_tokens: 800
-    });
-
-    return analysis.text;
-  } catch (error) {
-    console.error('AI analysis failed:', error);
-    return 'AI analysis temporarily unavailable';
-  }
-}
-
-// Bulk stock analysis for screener
-export async function bulkAnalyzeStocks(stocks: any[], criteria: string) {
-  try {
-    const stockSummaries = stocks.map(stock => 
-      `${stock.symbol}: Market Cap $${stock.marketCap}B, P/E ${stock.peRatio}, Growth ${stock.revenueGrowth}%`
-    ).join('\n');
-
-    const prompt = `
-      Score these stocks (1-100) for long-term value investment based on: ${criteria}
-      
-      Stocks to analyze:
-      ${stockSummaries}
-      
-      Return scores in format: SYMBOL:SCORE (one per line)
-      Then provide a brief market overview.
-    `;
-
-    const analysis = await cosmic.ai.generateText({
-      prompt,
-      max_tokens: 1000
-    });
-
-    return analysis.text;
-  } catch (error) {
-    console.error('Bulk AI analysis failed:', error);
-    return '';
+    console.error('Failed to fetch performance reports:', error);
+    return [];
   }
 }

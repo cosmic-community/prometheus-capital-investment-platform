@@ -1,6 +1,5 @@
 import { Calendar, User, FileText } from 'lucide-react'
 import { MarketInsight } from '@/types'
-import { format } from 'date-fns'
 
 interface InsightsGridProps {
   insights: MarketInsight[]
@@ -17,10 +16,23 @@ export default function InsightsGrid({ insights }: InsightsGridProps) {
     )
   }
 
+  const formatDate = (dateString: string): string => {
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      })
+    } catch (error) {
+      return dateString
+    }
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {insights.map((insight) => (
-        <article key={insight.id} className="card overflow-hidden">
+        <article key={insight.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           {insight.metadata?.featured_chart && (
             <img 
               src={`${insight.metadata.featured_chart.imgix_url}?w=800&h=400&fit=crop&auto=format,compress`}
@@ -37,7 +49,7 @@ export default function InsightsGrid({ insights }: InsightsGridProps) {
                 {insight.metadata?.publication_date && (
                   <div className="flex items-center space-x-1">
                     <Calendar className="h-4 w-4" />
-                    <span>{format(new Date(insight.metadata.publication_date), 'MMM dd, yyyy')}</span>
+                    <span>{formatDate(insight.metadata.publication_date)}</span>
                   </div>
                 )}
                 {insight.metadata?.author && (

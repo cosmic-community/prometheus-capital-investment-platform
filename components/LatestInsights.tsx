@@ -1,14 +1,26 @@
 import Link from 'next/link'
 import { Calendar, User, ArrowRight } from 'lucide-react'
 import { MarketInsight } from '@/types'
-import { format } from 'date-fns'
 
 interface LatestInsightsProps {
   insights: MarketInsight[]
 }
 
 export default function LatestInsights({ insights }: LatestInsightsProps) {
-  const displayInsights = insights.slice(0, 3)
+  const displayInsights = insights?.slice(0, 3) || []
+
+  const formatDate = (dateString: string): string => {
+    try {
+      const date = new Date(dateString)
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric' 
+      })
+    } catch (error) {
+      return dateString
+    }
+  }
 
   return (
     <section className="py-16 bg-white">
@@ -24,7 +36,7 @@ export default function LatestInsights({ insights }: LatestInsightsProps) {
           </div>
           <Link 
             href="/insights"
-            className="btn-primary flex items-center"
+            className="inline-flex items-center px-6 py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors"
           >
             View All Insights
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -33,7 +45,7 @@ export default function LatestInsights({ insights }: LatestInsightsProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {displayInsights.map((insight) => (
-            <article key={insight.id} className="card p-6">
+            <article key={insight.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               {insight.metadata?.featured_chart && (
                 <img 
                   src={`${insight.metadata.featured_chart.imgix_url}?w=600&h=300&fit=crop&auto=format,compress`}
@@ -49,7 +61,7 @@ export default function LatestInsights({ insights }: LatestInsightsProps) {
                   {insight.metadata?.publication_date && (
                     <div className="flex items-center space-x-1">
                       <Calendar className="h-4 w-4" />
-                      <span>{format(new Date(insight.metadata.publication_date), 'MMM dd, yyyy')}</span>
+                      <span>{formatDate(insight.metadata.publication_date)}</span>
                     </div>
                   )}
                   {insight.metadata?.author && (

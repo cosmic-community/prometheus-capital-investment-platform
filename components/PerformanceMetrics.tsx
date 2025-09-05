@@ -1,3 +1,5 @@
+'use client'
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { TrendingUp, TrendingDown, Award, Target } from 'lucide-react'
 import { PerformanceReport } from '@/types'
@@ -7,7 +9,7 @@ interface PerformanceMetricsProps {
 }
 
 export default function PerformanceMetrics({ reports }: PerformanceMetricsProps) {
-  const latestReport = reports[0]
+  const latestReport = reports && reports.length > 0 ? reports[0] : null
 
   const chartData = [
     {
@@ -43,7 +45,7 @@ export default function PerformanceMetrics({ reports }: PerformanceMetricsProps)
 
         {/* Key Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-          <div className="metric-card text-center">
+          <div className="bg-white rounded-lg p-6 shadow-sm text-center">
             <div className="flex items-center justify-center mb-3">
               <TrendingUp className="h-8 w-8 text-green-600" />
             </div>
@@ -53,7 +55,7 @@ export default function PerformanceMetrics({ reports }: PerformanceMetricsProps)
             <div className="text-sm text-secondary-600">Quarterly Return</div>
           </div>
 
-          <div className="metric-card text-center">
+          <div className="bg-white rounded-lg p-6 shadow-sm text-center">
             <div className="flex items-center justify-center mb-3">
               <Award className="h-8 w-8 text-primary-600" />
             </div>
@@ -63,7 +65,7 @@ export default function PerformanceMetrics({ reports }: PerformanceMetricsProps)
             <div className="text-sm text-secondary-600">Year-to-Date</div>
           </div>
 
-          <div className="metric-card text-center">
+          <div className="bg-white rounded-lg p-6 shadow-sm text-center">
             <div className="flex items-center justify-center mb-3">
               <Target className="h-8 w-8 text-accent-600" />
             </div>
@@ -73,7 +75,7 @@ export default function PerformanceMetrics({ reports }: PerformanceMetricsProps)
             <div className="text-sm text-secondary-600">vs Benchmark</div>
           </div>
 
-          <div className="metric-card text-center">
+          <div className="bg-white rounded-lg p-6 shadow-sm text-center">
             <div className="flex items-center justify-center mb-3">
               <TrendingDown className="h-8 w-8 text-red-500" />
             </div>
