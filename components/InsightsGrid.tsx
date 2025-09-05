@@ -1,4 +1,5 @@
 import { Calendar, User, FileText } from 'lucide-react'
+import Link from 'next/link'
 import { MarketInsight } from '@/types'
 
 interface InsightsGridProps {
@@ -32,57 +33,65 @@ export default function InsightsGrid({ insights }: InsightsGridProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {insights.map((insight) => (
-        <article key={insight.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-          {insight.metadata?.featured_chart && (
-            <img 
-              src={`${insight.metadata.featured_chart.imgix_url}?w=800&h=400&fit=crop&auto=format,compress`}
-              alt="Market analysis chart"
-              width={400}
-              height={200}
-              className="w-full h-48 object-cover"
-            />
-          )}
-          
-          <div className="p-6">
-            <div className="space-y-3">
-              <div className="flex items-center text-sm text-secondary-500 space-x-4">
-                {insight.metadata?.publication_date && (
-                  <div className="flex items-center space-x-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{formatDate(insight.metadata.publication_date)}</span>
-                  </div>
-                )}
-                {insight.metadata?.author && (
-                  <div className="flex items-center space-x-1">
-                    <User className="h-4 w-4" />
-                    <span>{insight.metadata.author.metadata?.full_name || insight.metadata.author.title}</span>
-                  </div>
-                )}
+        <Link 
+          key={insight.id} 
+          href={`/insights/${insight.slug}`}
+          className="block group"
+        >
+          <article className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-200 group-hover:shadow-md group-hover:border-primary-200">
+            {insight.metadata?.featured_chart && (
+              <div className="overflow-hidden">
+                <img 
+                  src={`${insight.metadata.featured_chart.imgix_url}?w=800&h=400&fit=crop&auto=format,compress`}
+                  alt="Market analysis chart"
+                  width={400}
+                  height={200}
+                  className="w-full h-48 object-cover transition-transform duration-200 group-hover:scale-105"
+                />
               </div>
+            )}
+            
+            <div className="p-6">
+              <div className="space-y-3">
+                <div className="flex items-center text-sm text-secondary-500 space-x-4">
+                  {insight.metadata?.publication_date && (
+                    <div className="flex items-center space-x-1">
+                      <Calendar className="h-4 w-4" />
+                      <span>{formatDate(insight.metadata.publication_date)}</span>
+                    </div>
+                  )}
+                  {insight.metadata?.author && (
+                    <div className="flex items-center space-x-1">
+                      <User className="h-4 w-4" />
+                      <span>{insight.metadata.author.metadata?.full_name || insight.metadata.author.title}</span>
+                    </div>
+                  )}
+                </div>
 
-              <h3 className="text-xl font-semibold text-secondary-900 mb-2">
-                {insight.metadata?.insight_title || insight.title}
-              </h3>
+                <h3 className="text-xl font-semibold text-secondary-900 mb-2 group-hover:text-primary-700 transition-colors">
+                  {insight.metadata?.insight_title || insight.title}
+                </h3>
 
-              <div className="text-secondary-600">
-                {insight.metadata?.content && (
-                  <div 
-                    className="prose prose-sm line-clamp-4"
-                    dangerouslySetInnerHTML={{ 
-                      __html: insight.metadata.content.substring(0, 300) + '...' 
-                    }} 
-                  />
-                )}
-              </div>
+                <div className="text-secondary-600">
+                  {insight.metadata?.content && (
+                    <div 
+                      className="prose prose-sm line-clamp-4"
+                      dangerouslySetInnerHTML={{ 
+                        __html: insight.metadata.content.substring(0, 300) + '...' 
+                      }} 
+                    />
+                  )}
+                </div>
 
-              <div className="pt-4 border-t border-secondary-200">
-                <span className="inline-block px-3 py-1 bg-primary-100 text-primary-800 text-sm rounded-full">
-                  {insight.metadata?.market_category?.value || 'Market Analysis'}
-                </span>
+                <div className="pt-4 border-t border-secondary-200">
+                  <span className="inline-block px-3 py-1 bg-primary-100 text-primary-800 text-sm rounded-full">
+                    {insight.metadata?.market_category?.value || 'Market Analysis'}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        </article>
+          </article>
+        </Link>
       ))}
     </div>
   )
