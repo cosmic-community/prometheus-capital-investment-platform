@@ -30,7 +30,7 @@ export default function ResearchGrid({ research }: ResearchGridProps) {
               </p>
             </div>
             {report.metadata?.confidential && (
-              <Lock className="h-5 w-5 text-amber-500" title="Confidential" />
+              <Lock className="h-5 w-5 text-amber-500" />
             )}
           </div>
 
