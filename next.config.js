@@ -11,8 +11,7 @@ const nextConfig = {
         hostname: 'imgix.cosmicjs.com'
       }
     ]
-  },
-  typedRoutes: false
+  }
 }
 
 module.exports = nextConfig

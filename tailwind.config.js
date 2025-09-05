@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        border: '#e2e8f0', // Added border color for border-border class
         primary: {
           50: '#f0f9ff',
           100: '#e0f2fe',
