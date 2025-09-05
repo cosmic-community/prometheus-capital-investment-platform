@@ -17,11 +17,11 @@ export default function Hero() {
             to identify exceptional long-term value opportunities in public and private markets.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-slide-up">
-            <Link href="/research" className="btn-primary">
+            <Link href="/research" className="inline-flex items-center btn-primary">
               View Our Research
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
-            <Link href="/screener" className="bg-white/20 hover:bg-white/30 text-white font-medium px-6 py-2 rounded-lg transition-colors duration-200">
+            <Link href="/screener" className="inline-flex items-center bg-white/20 hover:bg-white/30 text-white font-medium px-6 py-2 rounded-lg transition-colors duration-200">
               Try Stock Screener
             </Link>
           </div>
