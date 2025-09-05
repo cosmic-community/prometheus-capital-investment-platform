@@ -16,8 +16,6 @@ A comprehensive investment management platform combining a professional company 
 
 ## Clone this Project
 
-## Clone this Project
-
 Want to create your own version of this project with all the content and structure? Clone this Cosmic bucket and code repository to get started instantly:
 
 [![Clone this Project](https://img.shields.io/badge/Clone%20this%20Project-29abe2?style=for-the-badge&logo=cosmic&logoColor=white)](https://app.cosmicjs.com/projects/new?clone_bucket=68bb59d7285c02bfe718dcf4&clone_repository=68bb5da0285c02bfe718dd11)
